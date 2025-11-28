@@ -66,3 +66,29 @@ dmypy.json
 # IDE and local testing
 .vscode/
 example.py
+
+# .NET / C#
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.log
+.vs/
+*.csproj.user
+*.csproj.vspscc
+*.sln.docstates
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.userosscache
+*.sln.docstates
