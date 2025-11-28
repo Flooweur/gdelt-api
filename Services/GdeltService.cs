@@ -15,7 +15,7 @@ public class GdeltService : IGdeltService
     {
         _httpClient = httpClient;
         _logger = logger;
-        _httpClient.DefaultRequestHeaders.Add("User-Agent", "GDELT DOC C# API client - https://github.com/alex9smith/gdelt-doc-api");
+        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "GDELT DOC C# API client - https://github.com/alex9smith/gdelt-doc-api");
     }
 
     public async Task<List<Article>> ArticleSearchAsync(FiltersDto filters)
@@ -68,7 +68,7 @@ public class GdeltService : IGdeltService
         
         var json = LoadJson(content);
         
-        if (!json.TryGetValue("timeline", out var timelineToken) || timelineToken is not JsonElement timelineElement)
+        if (!json.TryGetValue("timeline", out var timelineElement))
         {
             return new List<Dictionary<string, object>>();
         }
@@ -106,9 +106,10 @@ public class GdeltService : IGdeltService
             }
 
             // For timelinevolraw, add the "All Articles" column
-            if (mode == "timelinevolraw" && firstSeries.Data[i].Norm.HasValue)
+            var norm = firstSeries.Data[i].Norm;
+            if (mode == "timelinevolraw" && norm.HasValue)
             {
-                dataPoint["All Articles"] = firstSeries.Data[i].Norm.Value;
+                dataPoint["All Articles"] = norm.Value;
             }
 
             result.Add(dataPoint);
